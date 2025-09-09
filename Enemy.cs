@@ -29,6 +29,7 @@ public class Enemy : MonoBehaviour
         animator.SetBool("Dead", true);
         GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
         GetComponent<Collider2D>().enabled = false;
+        GetComponent<EnemyChaseAttack>().enabled = false;
         this.enabled = false;
     }
 }

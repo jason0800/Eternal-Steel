@@ -9,6 +9,7 @@ public class PlayerCombat : MonoBehaviour
     public int attackDamage = 40;
     public float attackRate = 2f; // attacks per second
     float nextAttackTime;
+    public Rigidbody2D rb;
 
     // Update is called once per frame
     void Update()
@@ -36,6 +37,10 @@ public class PlayerCombat : MonoBehaviour
         {
             enemy.GetComponent<Enemy>().TakeDamage(attackDamage);
         }
+
+        // Stop the player from drifting
+        rb.linearVelocity = Vector2.zero;
+        Debug.Log("rb.linearVelocity: " + rb.linearVelocity);
     }
 
     void OnDrawGizmosSelected()
