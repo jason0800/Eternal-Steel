@@ -4,7 +4,7 @@ public class Enemy : MonoBehaviour
 {
     public Animator animator;
     public int maxHealth;
-    private int currentHealth;
+    public int currentHealth;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
