@@ -56,7 +56,8 @@ public class PlayerCombat : MonoBehaviour
             enemy.GetComponent<Enemy>().TakeDamage(attackDamage);
         }
 
-        // might need to add if statement so hitstop only activates if hitEnemies.length != 0
-        hitStopController.DoHitStop(hitEnemies);
+        // Only apply hit stop if enemies are hit
+        if (hitEnemies.Length != 0)
+            hitStopController.DoHitStop(hitEnemies);
     }
 }

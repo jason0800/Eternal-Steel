@@ -6,12 +6,10 @@ public class PlayerMovement : MonoBehaviour
     public Rigidbody2D rb;
     public Animator animator;
     public Vector2 movement;
-    private SpriteRenderer spriteRenderer;
     public bool canMove;
 
     void Awake()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
         canMove = true;
     }
 
@@ -25,7 +23,18 @@ public class PlayerMovement : MonoBehaviour
             animator.SetFloat("Horizontal", movement.x);
             animator.SetFloat("Speed", movement.sqrMagnitude);
 
-            if (movement.x != 0) spriteRenderer.flipX = movement.x > 0;
+            if (movement.x == -1)
+            {
+                Vector3 scale = transform.localScale;
+                scale.x = 1;
+                transform.localScale = scale;
+            }
+            else if (movement.x == 1)
+            {
+                Vector3 scale = transform.localScale;
+                scale.x = -1;
+                transform.localScale = scale;
+            }
         }
     }
 
