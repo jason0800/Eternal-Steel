@@ -14,6 +14,7 @@ public class PlayerCombat : MonoBehaviour
     public Rigidbody2D rb;
     public PlayerMovement playerMovement;
     public HitStopController hitStopController;
+    private bool isDead = false;
 
     void Start()
     {
@@ -70,8 +71,18 @@ public class PlayerCombat : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        if (isDead) return; // ignore hits after death
+
         currentHealth -= damage;
-        Debug.Log("Player has taken damage!");
+        animator.SetTrigger("Damaged");
+
+        // enemyChaseAttack.RestartAttackCooldown();
+        // enemyChaseAttack.isAttacking = false;
+
+        // Stop the player from drifting
+        playerMovement.canMove = false;
+        playerMovement.movement = Vector2.zero;
+        rb.linearVelocity = Vector2.zero;
 
         if (currentHealth <= 0)
         {
@@ -81,6 +92,21 @@ public class PlayerCombat : MonoBehaviour
 
     void Die()
     {
-        Debug.Log("Player has died!");
+        if (isDead) return;
+
+        isDead = true;
+        animator.SetBool("Dead", true);
+
+        // stop movement/combat scripts
+        GetComponent<PlayerMovement>().enabled = false;
+        this.enabled = false;
+
+        ShowDeathScreen();
+    }
+
+    void ShowDeathScreen()
+    {
+        // Slow motion effect
+        Time.timeScale = 0.5f;
     }
 }
