@@ -5,6 +5,7 @@ public class Enemy : MonoBehaviour
     public Animator animator;
     public int maxHealth;
     public int currentHealth;
+    public EnemyChaseAttack enemyChaseAttack;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -17,11 +18,11 @@ public class Enemy : MonoBehaviour
     {
         currentHealth -= damage;
         animator.SetTrigger("Damaged");
+        enemyChaseAttack.RestartAttackCooldown();
+        enemyChaseAttack.isAttacking = false;
 
         if (currentHealth <= 0)
-        {
             Die();
-        }
     }
 
     void Die()

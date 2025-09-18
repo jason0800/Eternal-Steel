@@ -3,6 +3,8 @@ using UnityEngine;
 public class PlayerCombat : MonoBehaviour
 {
     public Animator animator;
+    public int maxHealth;
+    public int currentHealth;
     public Transform attackPoint;
     public float attackRange = 0.5f;
     public LayerMask enemyLayers;
@@ -12,6 +14,11 @@ public class PlayerCombat : MonoBehaviour
     public Rigidbody2D rb;
     public PlayerMovement playerMovement;
     public HitStopController hitStopController;
+
+    void Start()
+    {
+        currentHealth = maxHealth;
+    }
 
     // Update is called once per frame
     void Update()
@@ -59,5 +66,21 @@ public class PlayerCombat : MonoBehaviour
         // Only apply hit stop if enemies are hit
         if (hitEnemies.Length != 0)
             hitStopController.DoHitStop(hitEnemies);
+    }
+
+    public void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+        Debug.Log("Player has taken damage!");
+
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        Debug.Log("Player has died!");
     }
 }

@@ -12,12 +12,6 @@ public class HitStopController : MonoBehaviour
     public Animator playerAnimator;
     public PlayerMovement playerMovement;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-
-    }
-
     // Update is called once per frame
     public void DoHitStop(Collider2D[] hitEnemies)
     {
@@ -44,11 +38,6 @@ public class HitStopController : MonoBehaviour
                 rb.linearVelocity = Vector2.zero;
                 enemyRigidbodies.Add(rb);
             }
-
-            // if (anim != null) {
-            //     anim.speed = 1f;
-            //     enemyAnimators.Add(anim);
-            // }
 
             if (script != null) {
                 script.enabled = false;
