@@ -4,7 +4,7 @@ public class PlayerCombat : MonoBehaviour
 {
     public Animator animator;
     public int maxHealth;
-    public int currentHealth;
+    private int currentHealth;
     public Transform attackPoint;
     public float attackRange = 0.5f;
     public LayerMask enemyLayers;
@@ -15,10 +15,17 @@ public class PlayerCombat : MonoBehaviour
     public PlayerMovement playerMovement;
     public HitStopController hitStopController;
     private bool isDead = false;
+    public GameObject deathPanel;   // Link your UI panel here
+    public HealthBar healthBar;
 
     void Start()
     {
+        // set health and health bar values
         currentHealth = maxHealth;
+        healthBar.SetMaxHealth(maxHealth);
+        // other settings
+        deathPanel.SetActive(false);
+        Time.timeScale = 1f; // Make sure time is normal at start
     }
 
     // Update is called once per frame
@@ -73,7 +80,9 @@ public class PlayerCombat : MonoBehaviour
     {
         if (isDead) return; // ignore hits after death
 
+        // set health
         currentHealth -= damage;
+        healthBar.SetHealth(currentHealth);
         animator.SetTrigger("Damaged");
 
         // enemyChaseAttack.RestartAttackCooldown();
@@ -107,6 +116,11 @@ public class PlayerCombat : MonoBehaviour
     void ShowDeathScreen()
     {
         // Slow motion effect
-        Time.timeScale = 0.5f;
+        Time.timeScale = 0.3f;
+        deathPanel.SetActive(true);
+
+        // Optional: Show cursor
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 }
